@@ -1,0 +1,46 @@
+El control ProgressBar muestra la evolución de una operación prolongada llenando un rectángulo en bloques de izquierda a derecha.
+
+Sintaxis
+
+ProgressBar
+
+Comentarios 
+
+El control ProgressBar muestra la evolución de una operación hacia su término. 
+Un control ProgressBar tiene un intervalo y una posición actual. El intervalo representa la duración completa de la operación. La posición actual representa el progreso de la aplicación para completar la operación. Las propiedades Max y Min establecen los límites del intervalo. La propiedad Value especifica la posición actual dentro del intervalo. Debido al uso de segmentos completos para llenar el control, la cantidad llenada sólo brinda una aproximación al valor actual de la propiedad Value. Basándose en el tamaño del control, la propiedad Value determina el momento de llenar el segmento siguiente.
+
+Las propiedades Height y Width del control ProgressBar determinan el número y el tamaño de los segmentos que lo llenan. Cuantos más segmentos se usen, mayor será la precisión con que el control reflejará la evolución de la operación. Para incrementar el número de segmentos mostrados, reduzca el valor de la propiedad Height o incremente el de Width. El valor de la propiedad BorderStyle también afecta al número y al tamaño de los segmentos. Para ajustarse al borde, el tamaño de los segmentos se reduce.
+
+Puede usar la propiedad Align con el control ProgressBar para situarlo automáticamente al principio o al final delformulario.
+
+Sugerencia   Para ajustar el tamaño del segmento para que el incremento del progreso se acerque a los valores del progreso real, haga que el control ProgressBar sea al menos 12 veces más ancho que alto.
+
+En el ejemplo siguiente se muestra la forma de usar un control ProgressBar, llamado ProgressBar1, para mostrar la evolución de una operación prolongada en unamatriz grande. Coloque un control CommandButton y un control ProgressBar en un formulario. La propiedad Align del código de ejemplo coloca el control ProgressBar en el borde inferior del formulario. El control ProgressBar no muestra ningún texto.
+
+Private Sub Command1_Click()
+   Dim Counter As Integer
+   Dim Workarea(250) As String
+   ProgressBar1.Min = LBound(Workarea)
+   ProgressBar1.Max = UBound(Workarea)
+   ProgressBar1.Visible = True
+
+'Establece Min como valor de Value.
+   ProgressBar1.Value = ProgressBar1.Min
+
+'Bucle para recorrer la matriz.
+   For Counter = LBound(Workarea) To UBound(Workarea)
+      'Establece los valores iniciales de cada elemento de la matriz.
+      Workarea(Counter) = "Valor inicial" & Counter
+      ProgressBar1.Value = Counter
+   Next Counter
+   ProgressBar1.Visible = False
+   ProgressBar1.Value = ProgressBar1.Min
+End Sub
+
+Private Sub Form_Load()
+   ProgressBar1.Align = vbAlignBottom
+   ProgressBar1.Visible = False
+   Command1.Caption = "Inicializar matriz"
+End Sub
+
+Nota para la distribución   El control ProgressBar forma parte de un grupo de controles ActiveX que podrá encontrar en el archivo MSCOMCTL.OCX. Para usar el control ProgressBar en una aplicación, debe agregar el archivo MSCOMCTL.OCX al proyecto. Al distribuir la aplicación, instale el archivo MSCOMCTL.OCX en el directorio System o System32 de Microsoft Windows. Si desea más información acerca de la forma de agregar un control ActiveX a un proyecto, vea el Manual del programador.
